@@ -1,0 +1,36 @@
+public class Materias3Preparacionparcial {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        List <String> materias =new ArrayList<>();
+        materias.add("Piloto IOT");
+        materias.add("Piloto de estructura de datos");
+        materias.add("Programación Estructurada");
+        materias.add("Piloto de IoT");
+        materias.add("Piloto de filosofía");
+        materias.add("Bases de datos");
+       //RECORRER
+        System.out.println("MATERIAS");
+       for(String materia: materias){
+           System.out.println(materia);
+       }
+       //MOSTRAR Y ELIMINAR MATERIAS QUE CUNPLAN CRITERIO
+        ListIterator <String> recorrido =materias.listIterator();
+        System.out.println("\n REVISION PATERIA POR MATERIA PARA ELIMINAR LAS QUE TENGAN PILOTO");
+        
+        while (recorrido.hasNext()){
+            String revisar_materia=recorrido.next();
+            
+            if (revisar_materia.startsWith("Piloto")){
+                recorrido.remove();
+                System.out.println(revisar_materia + " fue eliminada");
+            }
+        }
+       
+       
+               
+    }
+    
+}

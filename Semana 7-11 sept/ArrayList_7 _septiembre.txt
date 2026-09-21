@@ -1,0 +1,62 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.inferfazlist;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ * @author prestamo
+ */
+public class InferfazList {
+
+   private static void ImprimirLista(List<String> lista)
+   {
+       for(int i = 0 ; i < lista.size() ; i ++)
+       {
+           System.out.println("Elemento " + i  + " " + lista.get(i));
+       }
+        System.out.println("\n");
+   }
+    
+    public static void main(String[] args) {
+        List<String> lista = new ArrayList<>();
+        
+        lista.add("String 1");
+        lista.add("String 2");
+        lista.add("String 3");
+        lista.add("String 4");
+        lista.add("String 5");
+        
+        ImprimirLista(lista);
+        
+        lista.addFirst("String Final");
+        
+        ImprimirLista(lista);
+        
+        lista.addFirst("Cadena Inicial");
+        
+        ImprimirLista(lista);
+        
+        lista.set(4, "Prueba 4");
+        
+        ImprimirLista(lista);
+        
+        lista.remove(2);
+        
+        ImprimirLista(lista);
+        
+        lista.removeFirst();
+        
+        ImprimirLista(lista);
+        
+        System.out.println("Probando Iterador");
+        
+       for (String nodo : lista) {
+           System.out.println(nodo);
+       }
+    }
+}
