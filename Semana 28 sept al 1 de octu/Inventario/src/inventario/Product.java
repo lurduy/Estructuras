@@ -41,19 +41,19 @@ public class Product {
     public void setExistence(int Existence){
         this.Existence = Existence;
     }
-    public void getID(int ID)
+    public int getID()
     {
-        this.ID = ID;
+        return this.ID;
     }    
-    public void getName(String name)
+    public String getName()
     {
-        this.name = name;
+       return this.name;
     }
-    public void getPrice(Double Price){
-        this.Price = Price;
+    public Double getPrice(){
+        return this.Price;
     }
-    public void getExistence(int Existence){
-        this.Existence = Existence;
+    public int getExistence(){
+        return this.Existence;
     }
     
     public String MostrarInfo()

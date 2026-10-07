@@ -5,7 +5,9 @@
 package inventario;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /**
  *
@@ -14,10 +16,120 @@ import java.util.LinkedList;
 public class Inventario {
 
     static LinkedList<Product> productos = new LinkedList();
+    static Inventory inventario = new Inventory();
+    static Scanner scanner = new Scanner(System.in);
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        String opcion = "";
+        while(!"0".equals(opcion)){
+        mostrarMenu();
+        opcion = scanner.nextLine();
+            switch(opcion)
+            {
+                case "1":
+                    añadirProducto();
+                 break;
+                case "2":
+                    EliminarProducto();
+                    break;
+                case "3":
+                    inventario.MostrarElementos();
+                    break;
+                default:
+                    System.out.println("Seleccione una opción Valida");
+                    break;
+            }
+        }
+    }
+ 
+    public static void mostrarMenu()
+    {
+        System.out.println("Bienvenido al sistema de Inventario seleccione una opcion");
+        System.out.println("1. Para ingresar un nuevo producto al inventario");
+        System.out.println("2. Para eliminar un producto del inventario");
+        System.out.println("3. Para mostrar el inventario");
+        System.out.println("4. Buscar Producto");
+        System.out.println("5. Actualizar Precio de un producto");
+        System.out.println("0. Para Salir del inventario");
+    }
+    
+    private static void añadirProducto()
+    {
+        System.out.println("Ingrese El ID del producto");
+        Product producto = new Product();
+        Boolean Exist = true;
+        int id = 0;
+        while(Exist){
+            while (!scanner.hasNextInt()) {
+                System.out.println("❌ Eso no es un número entero válido.");
+                System.out.print("Intenta de nuevo: ");
+                scanner.next();
+            }
+            
+            id = scanner.nextInt();
+            scanner.nextLine();
+            Exist = inventario.ExistID(id);
+            if(Exist)
+            {
+                System.out.println("El ID ya esta siendo usado, intenta de nuevo");
+            }
+        }
+        producto.setID(id);
+        
+        
+        System.out.println("Ingrese el nombre del producto"); 
+        String nombre = scanner.nextLine();
+        producto.setName(nombre);
+        
+        System.out.println("Ingrese el valor del producto");
+        
+       while (!scanner.hasNextInt()) {
+            System.out.println("❌ Eso no es un número válido.");
+            System.out.print("Intenta de nuevo: ");
+            scanner.next(); // Descarta la entrada incorrecta
+        }
+
+        int valor = scanner.nextInt();
+        
+        producto.setPrice((double)valor);
+        
+        System.out.println("Ingrese la existencia del producto");
+        while (!scanner.hasNextInt()) {
+            System.out.println("❌ Eso no es un número entero válido.");
+            System.out.print("Intenta de nuevo: ");
+            scanner.next(); // Descarta la entrada incorrecta
+        }
+        producto.setExistence(scanner.nextInt());
+        
+        inventario.AddProduct(producto);
+    }
+    
+    
+    private static void EliminarProducto()
+    {
+        System.out.println("Ingrese el Id a borrar");
+        
+        while (!scanner.hasNextInt()) {
+            System.out.println("❌ Eso no es un número entero válido.");
+            System.out.print("Intenta de nuevo: ");
+            scanner.next(); // Descarta la entrada incorrecta
+        }
+        
+        int id = scanner.nextInt();
+        
+        if(inventario.ExistID(id))
+        {
+            if(inventario.EliminarByID(id)){
+                System.out.println("El producto ha sido eliminado");
+            }
+        }
+    }
+    
+    
+    public static void ClassAntigua()
+    {
         Product p1 = new Product();
         p1.setID(1);
         p1.setExistence(45);
@@ -44,5 +156,8 @@ public class Inventario {
         
         System.out.println("El producto con ID 1 es " + p1.MostrarInfo());
     }
-    
+
+    private static boolean ExistID(int nextInt) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
