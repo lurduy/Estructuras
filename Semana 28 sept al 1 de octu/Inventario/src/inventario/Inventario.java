@@ -44,6 +44,9 @@ public class Inventario {
                 case "6":
                     CambiaCategoriaxID();
                     break;
+                case "7":
+                    ActualizaExistencia();
+                    break;
                 default:
                     System.out.println("Seleccione una opción Valida");
                     break;
@@ -60,6 +63,7 @@ public class Inventario {
         System.out.println("4. Buscar Producto");
         System.out.println("5. Actualizar Precio de un producto");
         System.out.println("6. Cambiar la categoria de un producto");
+        System.out.println("7. Actualizar la existencia de un producto");
         System.out.println("0. Para Salir del inventario");
     }
     
@@ -191,6 +195,23 @@ public class Inventario {
         }
         
     }
+    private static void ActualizaExistencia()
+    {
+        System.out.println("Digite el ID del producto a actualizar");
+        int id = leerEntero();
+        
+        if(inventario.ExistID(id))
+        {
+            System.out.println("Digite la nueva existencia");
+            inventario.ActualizarExistenciaxID(id, leerEntero());
+            inventario.MostrarElementos();
+        }
+        else
+        {
+            System.out.println("El producto no existe");
+        }
+    }
+    
     public static void ClassAntigua()
     {
         Product p1 = new Product();

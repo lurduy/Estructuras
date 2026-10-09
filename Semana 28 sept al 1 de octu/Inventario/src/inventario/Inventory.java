@@ -83,6 +83,20 @@ public class Inventory {
         }
     }
     
+    void ActualizarExistenciaxID(int ID, int existencia)
+    {
+        for(Product p : products)
+        {
+            if(p.getID() == ID)
+            {
+                p.setExistence(existencia);
+                System.out.println("Producto Actualizado");
+                return;
+            }
+        }
+        System.out.println("El producto no existe");
+    }
+    
     void ActualizarCateroriaxID(int ID, String categoria)
     {
      for(Product p : products)
