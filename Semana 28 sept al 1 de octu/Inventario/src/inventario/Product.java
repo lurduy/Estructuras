@@ -14,17 +14,19 @@ public class Product {
     private int ID;
     private String name;
     private Double Price;
+    private String categoria;
     
     public Product(){
         
     }
     
-    public Product(int ID, int Existence, String name, Double Price)
+    public Product(int ID, int Existence, String name, Double Price, String categoria)
     {
         this.ID = ID;
         this.Existence = Existence;
         this.name = name;
         this.Price = Price;
+        this.categoria = categoria;
     }
     
     public void setID(int ID)
@@ -41,6 +43,11 @@ public class Product {
     public void setExistence(int Existence){
         this.Existence = Existence;
     }
+    
+    public void setCategoria(String categoria)
+    {
+        this.categoria = categoria;
+    }
     public int getID()
     {
         return this.ID;
@@ -55,9 +62,13 @@ public class Product {
     public int getExistence(){
         return this.Existence;
     }
+    public String getCategoria()
+    {
+        return this.categoria;
+    }
     
     public String MostrarInfo()
     {
-        return "El Producto " + this.name + " con el ID " + this.ID + " Tiene " + this.Existence + " en inventario; y su costo es  " + this.Price ;
+        return "El Producto " + this.name + " con el ID " + this.ID + " Tiene " + this.Existence + " en inventario; y su costo es  " + this.Price + "; categoria " + this.categoria;
     }
 }

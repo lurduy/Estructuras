@@ -4,8 +4,6 @@
  */
 package inventario;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -37,6 +35,15 @@ public class Inventario {
                 case "3":
                     inventario.MostrarElementos();
                     break;
+                case "4":
+                    BuscarProducto();
+                    break;
+                case"5":
+                    ActualizaValor();
+                    break;
+                case "6":
+                    CambiaCategoriaxID();
+                    break;
                 default:
                     System.out.println("Seleccione una opción Valida");
                     break;
@@ -52,6 +59,7 @@ public class Inventario {
         System.out.println("3. Para mostrar el inventario");
         System.out.println("4. Buscar Producto");
         System.out.println("5. Actualizar Precio de un producto");
+        System.out.println("6. Cambiar la categoria de un producto");
         System.out.println("0. Para Salir del inventario");
     }
     
@@ -62,14 +70,7 @@ public class Inventario {
         Boolean Exist = true;
         int id = 0;
         while(Exist){
-            while (!scanner.hasNextInt()) {
-                System.out.println("❌ Eso no es un número entero válido.");
-                System.out.print("Intenta de nuevo: ");
-                scanner.next();
-            }
-            
-            id = scanner.nextInt();
-            scanner.nextLine();
+            id = leerEntero();
             Exist = inventario.ExistID(id);
             if(Exist)
             {
@@ -85,23 +86,14 @@ public class Inventario {
         
         System.out.println("Ingrese el valor del producto");
         
-       while (!scanner.hasNextInt()) {
-            System.out.println("❌ Eso no es un número válido.");
-            System.out.print("Intenta de nuevo: ");
-            scanner.next(); // Descarta la entrada incorrecta
-        }
-
-        int valor = scanner.nextInt();
-        
-        producto.setPrice((double)valor);
+        producto.setPrice(leerDouble());
         
         System.out.println("Ingrese la existencia del producto");
-        while (!scanner.hasNextInt()) {
-            System.out.println("❌ Eso no es un número entero válido.");
-            System.out.print("Intenta de nuevo: ");
-            scanner.next(); // Descarta la entrada incorrecta
-        }
-        producto.setExistence(scanner.nextInt());
+        producto.setExistence(leerEntero());
+        
+        System.out.println("Ingrese la categoria del producto");
+        producto.setCategoria(scanner.nextLine());
+        
         
         inventario.AddProduct(producto);
     }
@@ -111,23 +103,94 @@ public class Inventario {
     {
         System.out.println("Ingrese el Id a borrar");
         
-        while (!scanner.hasNextInt()) {
-            System.out.println("❌ Eso no es un número entero válido.");
-            System.out.print("Intenta de nuevo: ");
-            scanner.next(); // Descarta la entrada incorrecta
-        }
+        int id = leerEntero();
         
-        int id = scanner.nextInt();
-        
-        if(inventario.ExistID(id))
+        if(inventario.EliminarByID(id))
         {
-            if(inventario.EliminarByID(id)){
-                System.out.println("El producto ha sido eliminado");
+            System.out.println("El producto ha sido eliminado");
+        }
+        else
+        {
+            System.out.println("El ID indicado no existe en el catalogo");
+        }
+    }
+    
+    private static int leerEntero()
+    {
+        while (true) {
+            try {
+                int n = Integer.parseInt(scanner.nextLine().trim());
+                if (n >= 0) {
+                    return n;
+                }
+                System.out.println("El valor no puede ser negativo.");
+            } catch (NumberFormatException e) {
+                System.out.println("Eso no es un número entero válido.");
             }
+            System.out.print("Intenta de nuevo: ");
+        }
+    }
+    
+    private static double leerDouble()
+    {
+        while (true) {
+            try {
+                double n = Double.parseDouble(scanner.nextLine().trim().replace(',', '.'));
+                if (n >= 0) {
+                    return n;
+                }
+                System.out.println("El valor no puede ser negativo.");
+            } catch (NumberFormatException e) {
+                System.out.println("Eso no es un número válido.");
+            }
+            System.out.print("Intenta de nuevo: ");
         }
     }
     
     
+    private static void BuscarProducto()
+    {
+        System.out.println("Digite el producto a buscar?");
+        String Producto = scanner.nextLine();
+        inventario.BuscarProducto(Producto);
+    }
+    
+    private static void ActualizaValor()
+    {
+        System.out.println("Digite el id del producto a actualizar");
+        
+        int id = leerEntero();
+        
+        if(inventario.ExistID(id))
+        {
+            System.out.println("Digite el valor correspondiente");
+            inventario.ActualizarValorxID(id, leerDouble());
+            inventario.MostrarElementos();
+        }
+        else
+        {
+            System.out.println("El ID indicado no existe en el catalogo");
+        }
+    }
+    
+    private static void CambiaCategoriaxID()
+    {
+        System.out.println("Digite el ID del producto a actualizar");
+        
+        int id = leerEntero();
+         if(inventario.ExistID(id))
+        {
+            System.out.println("Digite la nueva categoria");
+            String categoria = scanner.nextLine();
+            inventario.ActualizarCateroriaxID(id, categoria);
+            inventario.MostrarElementos();
+        }
+        else
+        {
+            System.out.println("El ID indicado no existe en el catalogo");
+        }
+        
+    }
     public static void ClassAntigua()
     {
         Product p1 = new Product();
@@ -137,27 +200,24 @@ public class Inventario {
         p1.setPrice((double)25000);
         productos.add(p1);
         
-        Product p2 = new Product(2, 25,"Papa Pastusa", (double)15000);
-        productos.add(p2);
-        Product p3 = new Product(3, 5,"salchipapa", (double)5000);
-        productos.add(p3);
-        Product p4 = new Product(4, 1,"empanada", (double)3200);
-        productos.add(p4);
-        Product p5 = new Product(5, 100,"gaseosa", (double)3500);
-        productos.add(p5);
+        //Product p2 = new Product(2, 25,"Papa Pastusa", (double)15000);
+        //productos.add(p2);
+        //Product p3 = new Product(3, 5,"salchipapa", (double)5000);
+        //productos.add(p3);
+        //Product p4 = new Product(4, 1,"empanada", (double)3200);
+        //productos.add(p4);
+        //Product p5 = new Product(5, 100,"gaseosa", (double)3500);
+        //productos.add(p5);
         
-        System.out.println("El producto con ID 1 es " + p1.MostrarInfo());
-        System.out.println("El producto con ID 2 es " + p2.MostrarInfo());
-        System.out.println("El producto con ID 3 es " + p3.MostrarInfo());
-        System.out.println("El producto con ID 4 es " + p4.MostrarInfo());
-        System.out.println("El producto con ID 5 es " + p5.MostrarInfo());
+        //System.out.println("El producto con ID 1 es " + p1.MostrarInfo());
+        //System.out.println("El producto con ID 2 es " + p2.MostrarInfo());
+        //System.out.println("El producto con ID 3 es " + p3.MostrarInfo());
+        //System.out.println("El producto con ID 4 es " + p4.MostrarInfo());
+        //System.out.println("El producto con ID 5 es " + p5.MostrarInfo());
         
-        p1.setPrice(14500.00);
+        //p1.setPrice(14500.00);
         
         System.out.println("El producto con ID 1 es " + p1.MostrarInfo());
     }
-
-    private static boolean ExistID(int nextInt) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 }
